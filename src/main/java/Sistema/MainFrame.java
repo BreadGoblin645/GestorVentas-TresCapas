@@ -359,7 +359,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
         // TODO add your handling code here:
-        JIFrame_Ventas JIFventas = new JIFrame_Ventas();
+        JIFrame_Ventas JIFventas = new JIFrame_Ventas(mainDesktopPane, this.nivelUsuario);
         mainDesktopPane.add(JIFventas);
         JIFventas.setVisible(true);
     }//GEN-LAST:event_btnVentasActionPerformed

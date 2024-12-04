@@ -59,7 +59,7 @@ public class InventarioLogica {
             return false;
         }
     }
-    
+    /*
     // ELIMINAR DATOS DE LA TABLA INVENTARIOS
     public boolean eliminarInventario(String modelo) {
         String consultaSQL = "DELETE FROM inventario WHERE modelo = '" + modelo + "'";
@@ -70,10 +70,51 @@ public class InventarioLogica {
             return false;
         }
     }
+    */
+    
+    public boolean eliminarInventarioPorId(int idInventario) {
+        String consultaSQL = "DELETE FROM inventario WHERE id = " + idInventario;
+        try {
+            return conexion.ejecutaSentenciasAccion(consultaSQL);
+        } catch (Exception e) {
+            System.out.println("Error al eliminar inventario: " + e.getMessage());
+            return false;
+        }
+    }
+
     
     // BUSQUEDA DE INVENTARIO - Segun Marca o Modelo
     public ResultSet buscarInventario(String criterio) {
         String consultaSQL = "SELECT * FROM inventario WHERE marca LIKE '%" + criterio + "%' OR modelo LIKE '%" + criterio + "%'";
+        return conexion.ejecutaSentenciasSelect(consultaSQL);
+    }
+    
+    // Busqueda de Inventario por ID
+    public ResultSet obtenerInventarioPorId(int id) {
+        String consultaSQL = "SELECT * FROM inventario WHERE id = " + id;
+        return conexion.ejecutaSentenciasSelect(consultaSQL);
+    }  
+    
+    // Buscar marca de vehiculos en inventario
+    public ResultSet obtenerMarcas() {
+        String consultaSQL = "SELECT DISTINCT marca FROM inventario";
+        return conexion.ejecutaSentenciasSelect(consultaSQL);
+    }
+
+    // BUSCAR MODELOS DE VEHICULOS SEGUN LA MARCA
+    public ResultSet obtenerModelosPorMarca(String marca) {
+        String consultaSQL = "SELECT DISTINCT modelo FROM inventario WHERE marca = '" + marca + "'";
+        return conexion.ejecutaSentenciasSelect(consultaSQL);
+    }
+    
+    // BUSCAR MODELOS DE VEHICULOS SEGUN EL MODELO Y LA MARCA
+    public ResultSet obtenerAnosPorModelo(String marca, String modelo) {
+        String consultaSQL = "SELECT DISTINCT ano FROM inventario WHERE marca = '" + marca + "' AND modelo = '" + modelo + "'";
+        return conexion.ejecutaSentenciasSelect(consultaSQL);
+    }
+    
+    public ResultSet obtenerIdInventario(String marca, String modelo, int ano) {
+        String consultaSQL = "SELECT id FROM inventario WHERE marca = '" + marca + "' AND modelo = '" + modelo + "' AND ano = " + ano;
         return conexion.ejecutaSentenciasSelect(consultaSQL);
     }
     

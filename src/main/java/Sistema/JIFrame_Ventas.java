@@ -1,8 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
+
 package Sistema;
+
+import CapaLogica.VentasDAO;
+import CapaLogica.VentasLogica;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.JDesktopPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -10,12 +15,88 @@ package Sistema;
  */
 public class JIFrame_Ventas extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form JIFrame_Ventas
-     */
-    public JIFrame_Ventas() {
+    private int nivelUsuario;  
+    private JDesktopPane desktopPane;
+    private MainFrame mainFrame;
+    VentasLogica ventasLogica;
+    VentasDAO ventasDAO;
+    
+    public JIFrame_Ventas(JDesktopPane desktopPane, int nivelUsuario) {
         initComponents();
+        this.ventasLogica = new VentasLogica();
+        this.desktopPane = desktopPane;
+        this.nivelUsuario = nivelUsuario;   
     }
+    
+    private void agregarFormulario() {
+        JIFrame_Ventas_Nuevo formNuevoVenta = new JIFrame_Ventas_Nuevo(this);
+        desktopPane.add(formNuevoVenta);
+        formNuevoVenta.setVisible(true);
+    }
+    
+    public void actualizarTablaVentas() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("VentaID");
+        modelo.addColumn("ProductoID");
+        modelo.addColumn("ClienteID");
+        modelo.addColumn("Fecha");
+        modelo.addColumn("Cantidad");
+        modelo.addColumn("Total");
+
+        try {
+            ResultSet resultado = ventasLogica.obtenerVentas();
+            while (resultado.next()) {
+                modelo.addRow(new Object[]{
+                    resultado.getInt("id"),
+                    resultado.getInt("id_inventario"),
+                    resultado.getInt("id_cliente"),
+                    resultado.getString("fecha"),
+                    resultado.getInt("cantidad"),
+                    resultado.getDouble("total")     
+                });
+            }
+            jTable_Ventas.setModel(modelo);
+        } catch (Exception e) {
+            System.out.println("Error al cargar los datos: " + e.getMessage());
+        }
+    }
+    
+    private void buscarVenta(String criterio) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("VentaID");
+        modelo.addColumn("ProductoID");
+        modelo.addColumn("ClienteID");
+        modelo.addColumn("Fecha");
+        modelo.addColumn("Cantidad");
+        modelo.addColumn("Total");
+
+        try {
+            ResultSet resultado;
+
+            // Detectar tipo de criterio
+            if (criterio.matches("\\d+")) { // Si es numérico
+                resultado = ventasLogica.buscarPorVentaOClienteID(Integer.parseInt(criterio));
+            } else {
+                JOptionPane.showMessageDialog(this, "Criterio inválido. Ingresa un ID valido");
+                return;
+            }
+
+            while (resultado.next()) {
+                modelo.addRow(new Object[]{
+                    resultado.getInt("id"),
+                    resultado.getInt("id_inventario"),
+                    resultado.getInt("id_cliente"),
+                    resultado.getString("fecha"),
+                    resultado.getInt("cantidad"),
+                    resultado.getDouble("total")
+                });
+            }
+            jTable_Ventas.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al buscar ventas: " + e.getMessage());
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,27 +107,196 @@ public class JIFrame_Ventas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnSalir = new javax.swing.JButton();
+        jScrollPane = new javax.swing.JScrollPane();
+        jTable_Ventas = new javax.swing.JTable();
+        btnBuscar = new javax.swing.JButton();
+        txtBuscar = new javax.swing.JTextField();
+        lblNotaBuscar = new javax.swing.JLabel();
+        btnAdmin = new javax.swing.JButton();
+        lblBuscar = new javax.swing.JLabel();
+        lblShow = new javax.swing.JLabel();
+        btnMostrar = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
+
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Gestor de ventas");
 
+        btnSalir.setText("SALIR");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
+        jTable_Ventas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable_Ventas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_VentasMouseClicked(evt);
+            }
+        });
+        jScrollPane.setViewportView(jTable_Ventas);
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        lblNotaBuscar.setText("*Buscar por VentaID o ClienteID");
+        lblNotaBuscar.setEnabled(false);
+
+        btnAdmin.setText("Administrar");
+        btnAdmin.setEnabled(false);
+        btnAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminActionPerformed(evt);
+            }
+        });
+
+        lblBuscar.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblBuscar.setText("BUSCAR:");
+
+        lblShow.setText("VER LISTA CLIENTES:");
+
+        btnMostrar.setText("Mostrar");
+        btnMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarActionPerformed(evt);
+            }
+        });
+
+        btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblShow)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnMostrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAgregar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblBuscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBuscar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 234, Short.MAX_VALUE)
+                                .addComponent(btnAdmin))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblNotaBuscar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnSalir)
+                                .addGap(10, 10, 10)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnMostrar)
+                    .addComponent(lblShow)
+                    .addComponent(btnAgregar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscar)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdmin)
+                    .addComponent(lblBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNotaBuscar)
+                    .addComponent(btnSalir))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void jTable_VentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_VentasMouseClicked
+        // TODO add your handling code here:
+        // Verificar si hay una fila seleccionada
+        int filaSeleccionada = jTable_Ventas.getSelectedRow();
+
+        if (filaSeleccionada != -1) {
+            btnAdmin.setEnabled(true);
+        }
+    }//GEN-LAST:event_jTable_VentasMouseClicked
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        String criterio = txtBuscar.getText().trim();
+
+        if (criterio.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingresa un criterio de búsqueda.");
+            return;
+        }
+        buscarVenta(criterio);
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_btnAdminActionPerformed
+
+    private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
+        // TODO add your handling code here:
+        actualizarTablaVentas();
+    }//GEN-LAST:event_btnMostrarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        agregarFormulario();
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdmin;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnMostrar;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JScrollPane jScrollPane;
+    private javax.swing.JTable jTable_Ventas;
+    private javax.swing.JLabel lblBuscar;
+    private javax.swing.JLabel lblNotaBuscar;
+    private javax.swing.JLabel lblShow;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

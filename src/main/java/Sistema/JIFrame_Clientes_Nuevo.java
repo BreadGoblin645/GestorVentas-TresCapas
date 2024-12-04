@@ -3,6 +3,7 @@ package Sistema;
 
 import CapaLogica.ClientesDAO;
 import CapaLogica.ClientesLogica;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,6 +31,11 @@ public class JIFrame_Clientes_Nuevo extends javax.swing.JInternalFrame {
         txtApellido.setText("");
         txtTelefono.setText("");
         txtCorreo.setText("");
+    }
+            // Método para validar el formato del correo
+    private boolean validarCorreo(String correo) {
+        String regex = "^[\\w-\\.]+@[\\w-\\.]+\\.[a-zA-Z]{2,}$";
+        return correo.matches(regex);
     }
 
     /**
@@ -89,6 +95,18 @@ public class JIFrame_Clientes_Nuevo extends javax.swing.JInternalFrame {
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyReleased(evt);
+            }
+        });
+
+        txtCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCorreoKeyReleased(evt);
             }
         });
 
@@ -173,6 +191,12 @@ public class JIFrame_Clientes_Nuevo extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.");
             return;
         }
+        
+        if (!validarCorreo(correo)) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingresa un correo válido.");
+            txtCorreo.requestFocus();
+            return;
+        }
 
         clientesDAO.setNombre(nombre);
         clientesDAO.setApellido(apellido);
@@ -182,10 +206,10 @@ public class JIFrame_Clientes_Nuevo extends javax.swing.JInternalFrame {
 
         boolean resultado = clientesLogica.insertarCliente(clientesDAO);
         if(resultado){
-            JOptionPane.showMessageDialog(rootPane, "ERROR, El registro ya existe...");
+            JOptionPane.showMessageDialog(rootPane, "ERROR, El registro ya existe o no se pudo insertar.");
         } else {
+            JOptionPane.showMessageDialog(rootPane, "Cliente agregado correctamente.");
             frameClientes.actualizarTablaClientes();
-            JOptionPane.showMessageDialog(rootPane, "Cliente agragado al registro...");
             LimpiarCampos();
         }
 
@@ -196,6 +220,44 @@ public class JIFrame_Clientes_Nuevo extends javax.swing.JInternalFrame {
         LimpiarCampos();
 
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void txtTelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyReleased
+        // TODO add your handling code here:
+        String texto = txtTelefono.getText();
+        texto = texto.replaceAll("[^\\d]", "");
+
+        if (texto.length() > 10) {
+            texto = texto.substring(0, 10);
+        }
+
+        // Formatear al estilo (xxx) xxx-xxxx
+        StringBuilder formateado = new StringBuilder();
+        if (texto.length() >= 1) {
+            formateado.append("(");
+            formateado.append(texto.substring(0, Math.min(3, texto.length())));
+        }
+        if (texto.length() >= 4) {
+            formateado.append(") ");
+            formateado.append(texto.substring(3, Math.min(6, texto.length())));
+        }
+        if (texto.length() >= 7) {
+            formateado.append("-");
+            formateado.append(texto.substring(6));
+        }
+
+        txtTelefono.setText(formateado.toString());
+    }//GEN-LAST:event_txtTelefonoKeyReleased
+
+    private void txtCorreoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyReleased
+        // TODO add your handling code here:
+        String correo = txtCorreo.getText().trim();
+
+        if (validarCorreo(correo)) {
+            txtCorreo.setBackground(Color.WHITE);
+        } else {
+            txtCorreo.setBackground(Color.PINK);
+        }
+    }//GEN-LAST:event_txtCorreoKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

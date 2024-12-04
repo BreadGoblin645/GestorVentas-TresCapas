@@ -230,7 +230,8 @@ public class JIFrame_Inventario_Gestor extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Error al actualizar los datos del inventario.");
             } else {
                 frameInventario.actualizarTablaInventario();
-                JOptionPane.showMessageDialog(this, "Datos actualizados correctamente.");               
+                JOptionPane.showMessageDialog(this, "Datos actualizados correctamente.");
+                this.dispose();
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Error: Año y Existencia deben ser números.");
@@ -239,6 +240,7 @@ public class JIFrame_Inventario_Gestor extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
+        int inventario_ID = inventarioDAO.getId();
         String modelo = txtModelo.getText().trim();
 
         if (modelo.isEmpty()) {
@@ -251,13 +253,14 @@ public class JIFrame_Inventario_Gestor extends javax.swing.JInternalFrame {
             "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
         if (confirmacion == JOptionPane.YES_OPTION) {
-            boolean resultado = inventarioLogica.eliminarInventario(modelo);
+            boolean resultado = inventarioLogica.eliminarInventarioPorId(inventario_ID);
             if (resultado) {
                 JOptionPane.showMessageDialog(this, "Error al eliminar el registro.");
             } else {
                 frameInventario.actualizarTablaInventario();
                 JOptionPane.showMessageDialog(this, "Registro eliminado correctamente.");
                 limpiarCampos();
+                this.dispose();
             }
         }
         
