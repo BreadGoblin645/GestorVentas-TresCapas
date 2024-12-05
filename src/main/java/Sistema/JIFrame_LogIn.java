@@ -144,8 +144,6 @@ public class JIFrame_LogIn extends javax.swing.JInternalFrame {
 
         String correo = txtCorreo.getText().trim();
         String clave = txtClave.getText().trim();
-        String nombre = "";
-        String nivelTexto = "";
         int nivel = -1;
 
         if (correo.isEmpty() || clave.isEmpty()) {
@@ -159,10 +157,13 @@ public class JIFrame_LogIn extends javax.swing.JInternalFrame {
             // Obtener nombre y nivel del usuario
             UsuariosDAO usuario = usuariosLogica.obtenerDatosUsuario(correo);
             if (usuario != null) {
-                String nombreUsuario = usuario.getNombres();
+                
+                String nombre = usuario.getNombres();
+                String apellido = usuario.getApellidos();
                 nivel = usuario.getNivel();
+                
 
-                nivelTexto = switch (nivel) {
+                String nivelTexto = switch (nivel) {
                     case 1 -> "Usuario";
                     case 2 -> "Asistente";
                     case 3 -> "Administrador";
@@ -170,23 +171,21 @@ public class JIFrame_LogIn extends javax.swing.JInternalFrame {
                 };
 
                 // Actualizar los labels del MainFrame
-                mainFrame.actualizarLabelsUsuario(nombreUsuario, nivelTexto);
+                mainFrame.actualizarLabelsUsuario(nombre, apellido, nivelTexto);
+                mainFrame.ActualizarEstadoLogin(true, nivel);
+                mainFrame.activarBotonCerrarSesision();
+                mainFrame.desacativarLogInBoton();
             }
-
-            // Actualizar estado de login
-            mainFrame.ActualizarEstadoLogin(true, nivel);
-            // Configurar nivel de usuario en el MainFrame
-            mainFrame.setNivelUsuario(nivel);
-            // cambia los estados de las acciones de acceso
-            mainFrame.desacativarLogInBoton();
-            mainFrame.activarBotonCerrarSesision();
-
+            
+            
             // Cerrar Frame_Login
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Error: Correo o clave inválidos.");
             LimpiarCampos();
         }
+        //Enviamos el tipo de usuario al sistma principal.
+        mainFrame.setNivelUsuario(nivel);
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed

@@ -1,8 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
+
 package Sistema;
+import javax.swing.JOptionPane;
+import CapaLogica.VentasDAO;
+import CapaLogica.VentasLogica;
+import java.sql.ResultSet;
 
 /**
  *
@@ -10,13 +11,86 @@ package Sistema;
  */
 public class JIFrame_Ventas_Gestor extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form JIFrame_Ventas_Gestor
-     */
-    public JIFrame_Ventas_Gestor() {
-        initComponents();
-    }
 
+    private JIFrame_Ventas frameVentas;
+    VentasLogica ventasLogica;
+    VentasDAO ventasDAO;
+    
+    public JIFrame_Ventas_Gestor(JIFrame_Ventas frameVentas, int nivelUsuario, int id, int productoID, 
+            int clienteID, String fecha, int cantidad, double total) {
+        
+        initComponents();  
+        ventasLogica = new VentasLogica();
+        ventasDAO = new VentasDAO();
+        this.frameVentas = frameVentas;
+        
+        // Establecer los valores en los camposve
+        this.ventasDAO.setId(id);
+        txt_VentaID.setText(String.valueOf(id));
+        txt_ClienteID.setText(String.valueOf(clienteID));
+        txt_InventarioID.setText(String.valueOf(productoID));
+        txtFecha.setText(fecha);
+        txtCantidad.setText(String.valueOf(cantidad));
+        txtTotal.setText(String.valueOf(total));
+        
+        detallesDelCliente(clienteID);
+        detallesDelVehiculo(productoID);
+        
+        // Configurar acceso al botón Eliminar según el nivel de usuario
+        if (nivelUsuario == 3) { 
+            btnEliminar.setEnabled(true);
+        } else if (nivelUsuario == 1 || nivelUsuario == 2) {
+            btnEliminar.setEnabled(false);
+        }      
+    }
+    
+    private void detallesDelCliente(int clienteID){
+        try {
+            VentasLogica ventasLogica = new VentasLogica();
+            ResultSet rsCliente = ventasLogica.obtenerNombreCliente(clienteID);
+            if (rsCliente.next()) {
+                String nombre = rsCliente.getString("nombre");
+                String apellido = rsCliente.getString("apellido");
+                lblClienteDetalles.setText(nombre + " " + apellido); // Actualiza el JLabel
+            } else {
+                lblClienteDetalles.setText("Cliente no encontrado");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al obtener los datos del cliente: " + e.getMessage());
+            lblClienteDetalles.setText("Error al cargar cliente");
+        }
+    }
+    
+    private void detallesDelVehiculo(int inventarioID){
+        try {
+            VentasLogica ventasLogica = new VentasLogica();
+            ResultSet rsVehiculo = ventasLogica.obtenerDetallesVehiculo(inventarioID);
+            if (rsVehiculo.next()) {
+                String marca = rsVehiculo.getString("marca");
+                String modelo = rsVehiculo.getString("modelo");
+                int anio = rsVehiculo.getInt("ano");
+                lblVehiculoDetalles.setText(marca + ", " + modelo + ", " + anio);
+            } else {
+                lblVehiculoDetalles.setText("Vehículo no encontrado");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al obtener los datos del vehículo: " + e.getMessage());
+            lblVehiculoDetalles.setText("Error al cargar info vehículo");
+        }
+    }
+    
+    private void limpiarCampos(){
+        txt_VentaID.setText("");
+        txt_ClienteID.setText("");
+        txt_InventarioID.setText("");
+        txtFecha.setText("");
+        txtCantidad.setText("");
+        txtTotal.setText("");
+        lblClienteDetalles.setText("");
+        lblVehiculoDetalles.setText("");     
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,21 +100,303 @@ public class JIFrame_Ventas_Gestor extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTitulo = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        btnActualizar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
+        ventasAdminPanel = new javax.swing.JPanel();
+        lbl_InventarioID = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
+        lblUnidades = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
+        lbl_VentaID = new javax.swing.JLabel();
+        lbl_ClienteID = new javax.swing.JLabel();
+        txt_InventarioID = new javax.swing.JTextField();
+        txt_ClienteID = new javax.swing.JTextField();
+        txt_VentaID = new javax.swing.JTextField();
+        lblClienteDetalles = new javax.swing.JLabel();
+        lblVehiculoDetalles = new javax.swing.JLabel();
+        txtFecha = new javax.swing.JTextField();
+        txtCantidad = new javax.swing.JTextField();
+        txtTotal = new javax.swing.JTextField();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Administrar Ventas");
+        setSize(new java.awt.Dimension(0, 0));
+
+        lblTitulo.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblTitulo.setText("Gestor de Ventas");
+
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("ELIMINAR");
+        btnEliminar.setEnabled(false);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnActualizar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnActualizar)
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSalir)
+                .addContainerGap())
+        );
+
+        ventasAdminPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        lbl_InventarioID.setText("Inventario ID:");
+
+        lblFecha.setText("Fecha:");
+
+        lblUnidades.setText("Unidades:");
+
+        lblTotal.setText("Total:");
+
+        lbl_VentaID.setText("Venta ID:");
+
+        lbl_ClienteID.setText("Cliente ID:");
+
+        txt_InventarioID.setEnabled(false);
+
+        txt_ClienteID.setEnabled(false);
+
+        txt_VentaID.setEnabled(false);
+
+        lblClienteDetalles.setText("-");
+
+        lblVehiculoDetalles.setText("-");
+
+        javax.swing.GroupLayout ventasAdminPanelLayout = new javax.swing.GroupLayout(ventasAdminPanel);
+        ventasAdminPanel.setLayout(ventasAdminPanelLayout);
+        ventasAdminPanelLayout.setHorizontalGroup(
+            ventasAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ventasAdminPanelLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(ventasAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_InventarioID)
+                    .addComponent(lbl_ClienteID)
+                    .addComponent(lbl_VentaID)
+                    .addComponent(lblFecha)
+                    .addComponent(lblUnidades)
+                    .addComponent(lblTotal))
+                .addGap(18, 18, 18)
+                .addGroup(ventasAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(ventasAdminPanelLayout.createSequentialGroup()
+                        .addGroup(ventasAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txt_InventarioID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                            .addComponent(txt_VentaID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(txt_ClienteID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(ventasAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblClienteDetalles)
+                            .addComponent(lblVehiculoDetalles)))
+                    .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                    .addComponent(txtCantidad)
+                    .addComponent(txtTotal))
+                .addContainerGap(95, Short.MAX_VALUE))
+        );
+        ventasAdminPanelLayout.setVerticalGroup(
+            ventasAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ventasAdminPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ventasAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbl_VentaID)
+                    .addComponent(txt_VentaID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(ventasAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_ClienteID)
+                    .addComponent(txt_ClienteID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblClienteDetalles))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(ventasAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_InventarioID)
+                    .addComponent(txt_InventarioID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblVehiculoDetalles))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(ventasAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFecha)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(ventasAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblUnidades)
+                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(ventasAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTotal)
+                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(ventasAdminPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(104, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTitulo)
+                .addGap(224, 224, 224))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(lblTitulo)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ventasAdminPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:        
+        int id = ventasDAO.getId();
+
+        int confirmacion = JOptionPane.showConfirmDialog(this, 
+            "¿Estás seguro de que deseas eliminar este registro?", 
+            "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            boolean resultado = ventasLogica.eliminarVenta(id);
+            if (resultado) {
+                JOptionPane.showMessageDialog(this, "Error al eliminar el registro.");
+            } else {
+                frameVentas.actualizarTablaVentas();
+                JOptionPane.showMessageDialog(this, "Registro eliminado correctamente.");
+                limpiarCampos();
+                this.dispose();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        String idTexto = txt_VentaID.getText().trim();
+        String clienteIDTexto = txt_ClienteID.getText().trim();
+        String productoIDTexto = txt_InventarioID.getText().trim();
+        String fecha = txtFecha.getText().trim();
+        String cantidadTexto = txtCantidad.getText().trim();
+        String totalTexto = txtTotal.getText().trim();
+
+        if (fecha.isEmpty() || cantidadTexto.isEmpty() || totalTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Error: Todos los campos deben estar llenos.");
+            return;
+        }
+        
+        String patron = "\\d{4}-\\d{2}-\\d{2}";
+        if (!fecha.matches(patron)) {
+            JOptionPane.showMessageDialog(this, "La fecha ingresada no es válida. Por favor, usa el formato yyyy-MM-dd.");
+            return;
+        }
+        
+        try {
+            java.time.LocalDate.parse(fecha);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "La fecha ingresada no es válida. Por favor, usa el formato yyyy-MM-dd.");
+            return;
+        }
+        
+
+        try {
+            int id = Integer.parseInt(idTexto);
+            int clienteID = Integer.parseInt(clienteIDTexto);
+            int productoID = Integer.parseInt(productoIDTexto);
+            int cantidad = Integer.parseInt(cantidadTexto);
+            double total = Double.parseDouble(totalTexto);
+
+            // Configurar los datos en el DAO
+            ventasDAO.setId(id);
+            ventasDAO.setIdCliente(clienteID);
+            ventasDAO.setIdInventario(productoID);            
+            ventasDAO.setFecha(fecha);
+            ventasDAO.setCantidad(cantidad);
+            ventasDAO.setTotal(total);
+
+
+            // Llamar a la lógica para actualizar el inventario
+            boolean resultado = ventasLogica.actualizarVenta(ventasDAO);
+            if (resultado) {
+                JOptionPane.showMessageDialog(this, "Error al actualizar los datos del inventario.");
+            } else {
+                frameVentas.actualizarTablaVentas();
+                JOptionPane.showMessageDialog(this, "Datos actualizados correctamente.");
+                this.dispose();
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error.");
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:        
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblClienteDetalles;
+    private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblTotal;
+    private javax.swing.JLabel lblUnidades;
+    private javax.swing.JLabel lblVehiculoDetalles;
+    private javax.swing.JLabel lbl_ClienteID;
+    private javax.swing.JLabel lbl_InventarioID;
+    private javax.swing.JLabel lbl_VentaID;
+    private javax.swing.JTextField txtCantidad;
+    private javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtTotal;
+    private javax.swing.JTextField txt_ClienteID;
+    private javax.swing.JTextField txt_InventarioID;
+    private javax.swing.JTextField txt_VentaID;
+    private javax.swing.JPanel ventasAdminPanel;
     // End of variables declaration//GEN-END:variables
 }

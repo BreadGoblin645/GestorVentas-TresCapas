@@ -73,4 +73,14 @@ public class VentasLogica {
         return conexion.ejecutaSentenciasSelect(consultaSQL);
     }
     
+    public ResultSet obtenerNombreCliente (int ClienteID){
+        String consultaSQL = "SELECT nombre, apellido FROM clientes where id = " + ClienteID;
+        return conexion.ejecutaSentenciasSelect(consultaSQL);
+    }
+    
+    public ResultSet obtenerDetallesVehiculo (int VehiculoID){
+        String consultaSQL = "SELECT marca, modelo, ano FROM inventario where id = " + VehiculoID;
+        return conexion.ejecutaSentenciasSelect(consultaSQL);
+    }
+            
 }

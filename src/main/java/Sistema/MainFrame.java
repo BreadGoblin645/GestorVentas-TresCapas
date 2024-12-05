@@ -24,9 +24,9 @@ public class MainFrame extends javax.swing.JFrame {
     
     
     // metodo para Actualizar la informacion del usuario que inicio secion
-    public void actualizarLabelsUsuario(String nombreUsuario, String userNivel) {
-        lblUsername.setText("Usuario: " + nombreUsuario);
-        lblNivel.setText("Nivel: " + userNivel);
+    public void actualizarLabelsUsuario(String nombreUsuario, String apellidoUsuario, String userNivel) {
+        lblUsername.setText("Usuario: " + nombreUsuario + " " + apellidoUsuario);
+        lblNivel.setText(userNivel);
     }
     
     //Metodo para actualizar el estado del programa segun el usuario
@@ -67,36 +67,84 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         mainDesktopPane = new javax.swing.JDesktopPane();
-        PanelVentas = new javax.swing.JPanel();
-        lblAdminInventario = new javax.swing.JLabel();
-        lblAdminClientes = new javax.swing.JLabel();
-        lblAdminVentas = new javax.swing.JLabel();
-        btnInventario = new javax.swing.JButton();
-        btnClientes = new javax.swing.JButton();
-        btnVentas = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JSeparator();
-        PanelAdmin = new javax.swing.JPanel();
-        btnUsuarios = new javax.swing.JButton();
-        lblAdminUsuarios = new javax.swing.JLabel();
-        jSeparator3 = new javax.swing.JSeparator();
+        jPanel1 = new javax.swing.JPanel();
+        lbl_imgLogo = new javax.swing.JLabel();
         PanelUserInfo = new javax.swing.JPanel();
+        lblBienvenido = new javax.swing.JLabel();
         lblUsername = new javax.swing.JLabel();
         lblNivel = new javax.swing.JLabel();
-        lbl_imgLogo = new javax.swing.JLabel();
+        PanelVentas = new javax.swing.JPanel();
+        jSeparator2 = new javax.swing.JSeparator();
+        lblAdminInventario = new javax.swing.JLabel();
+        lblAdminVentas = new javax.swing.JLabel();
+        lblAdminClientes = new javax.swing.JLabel();
+        btnInventario = new javax.swing.JButton();
+        btnVentas = new javax.swing.JButton();
+        btnClientes = new javax.swing.JButton();
+        PanelAdmin = new javax.swing.JPanel();
+        jSeparator3 = new javax.swing.JSeparator();
+        lblAdminUsuarios = new javax.swing.JLabel();
+        btnUsuarios = new javax.swing.JButton();
         btnEntrar = new javax.swing.JButton();
         btnLogOff = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        mainDesktopPane.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mainDesktopPane.setPreferredSize(new java.awt.Dimension(1200, 800));
+
         javax.swing.GroupLayout mainDesktopPaneLayout = new javax.swing.GroupLayout(mainDesktopPane);
         mainDesktopPane.setLayout(mainDesktopPaneLayout);
         mainDesktopPaneLayout.setHorizontalGroup(
             mainDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1027, Short.MAX_VALUE)
+            .addGap(0, 1262, Short.MAX_VALUE)
         );
         mainDesktopPaneLayout.setVerticalGroup(
             mainDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        lbl_imgLogo.setIcon(new javax.swing.ImageIcon("/Users/alexhp/Downloads/logo(1).png")); // NOI18N
+
+        PanelUserInfo.setEnabled(false);
+
+        lblBienvenido.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        lblBienvenido.setText("Bienvenido");
+
+        lblUsername.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        lblUsername.setText("username");
+        lblUsername.setFocusTraversalKeysEnabled(false);
+        lblUsername.setFocusable(false);
+
+        lblNivel.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        lblNivel.setText("UsernameNivel");
+        lblNivel.setFocusable(false);
+
+        javax.swing.GroupLayout PanelUserInfoLayout = new javax.swing.GroupLayout(PanelUserInfo);
+        PanelUserInfo.setLayout(PanelUserInfoLayout);
+        PanelUserInfoLayout.setHorizontalGroup(
+            PanelUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelUserInfoLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(PanelUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNivel)
+                    .addComponent(lblUsername))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelUserInfoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblBienvenido)
+                .addGap(67, 67, 67))
+        );
+        PanelUserInfoLayout.setVerticalGroup(
+            PanelUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelUserInfoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblBienvenido)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblUsername)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblNivel)
+                .addContainerGap())
         );
 
         PanelVentas.setEnabled(false);
@@ -104,23 +152,16 @@ public class MainFrame extends javax.swing.JFrame {
         lblAdminInventario.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         lblAdminInventario.setText("Administrador de Inventario");
 
-        lblAdminClientes.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        lblAdminClientes.setText("Administrador de Clientes");
-
         lblAdminVentas.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         lblAdminVentas.setText("Administrador de Ventas");
+
+        lblAdminClientes.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblAdminClientes.setText("Administrador de Clientes");
 
         btnInventario.setText("Inventario");
         btnInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInventarioActionPerformed(evt);
-            }
-        });
-
-        btnClientes.setText("Clientes");
-        btnClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClientesActionPerformed(evt);
             }
         });
 
@@ -131,32 +172,35 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnClientes.setText("Clientes");
+        btnClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelVentasLayout = new javax.swing.GroupLayout(PanelVentas);
         PanelVentas.setLayout(PanelVentasLayout);
         PanelVentasLayout.setHorizontalGroup(
             PanelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelVentasLayout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(btnInventario)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(PanelVentasLayout.createSequentialGroup()
                 .addGroup(PanelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelVentasLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(PanelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblAdminClientes)
+                            .addGroup(PanelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblAdminInventario, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblAdminVentas)
+                                .addGroup(PanelVentasLayout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
+                                    .addComponent(btnVentas)))
                             .addGroup(PanelVentasLayout.createSequentialGroup()
-                                .addContainerGap()
+                                .addGap(6, 6, 6)
                                 .addGroup(PanelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblAdminClientes)
-                                    .addGroup(PanelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblAdminInventario, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(lblAdminVentas))))
-                            .addGroup(PanelVentasLayout.createSequentialGroup()
-                                .addGap(62, 62, 62)
-                                .addComponent(btnVentas))
-                            .addGroup(PanelVentasLayout.createSequentialGroup()
-                                .addGap(59, 59, 59)
-                                .addComponent(btnClientes)))
-                        .addGap(0, 10, Short.MAX_VALUE))
+                                    .addComponent(btnInventario)
+                                    .addComponent(btnClientes))))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jSeparator2))
                 .addContainerGap())
         );
@@ -166,9 +210,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblAdminInventario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnInventario)
-                .addGap(25, 25, 25)
+                .addGap(31, 31, 31)
                 .addComponent(lblAdminVentas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVentas)
@@ -181,15 +225,15 @@ public class MainFrame extends javax.swing.JFrame {
 
         PanelAdmin.setEnabled(false);
 
+        lblAdminUsuarios.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblAdminUsuarios.setText("Administrador de usuarios");
+
         btnUsuarios.setText("Usuarios");
         btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUsuariosActionPerformed(evt);
             }
         });
-
-        lblAdminUsuarios.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        lblAdminUsuarios.setText("Administrador de usuarios");
 
         javax.swing.GroupLayout PanelAdminLayout = new javax.swing.GroupLayout(PanelAdmin);
         PanelAdmin.setLayout(PanelAdminLayout);
@@ -199,11 +243,11 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(PanelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelAdminLayout.createSequentialGroup()
-                        .addGroup(PanelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblAdminUsuarios)
-                            .addGroup(PanelAdminLayout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addComponent(btnUsuarios)))
+                        .addGap(6, 6, 6)
+                        .addComponent(btnUsuarios)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(PanelAdminLayout.createSequentialGroup()
+                        .addComponent(lblAdminUsuarios)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(PanelAdminLayout.createSequentialGroup()
                         .addComponent(jSeparator3)
@@ -220,38 +264,6 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        PanelUserInfo.setEnabled(false);
-
-        lblUsername.setText("username");
-        lblUsername.setFocusTraversalKeysEnabled(false);
-        lblUsername.setFocusable(false);
-
-        lblNivel.setText("UsernameNivel");
-        lblNivel.setFocusable(false);
-
-        javax.swing.GroupLayout PanelUserInfoLayout = new javax.swing.GroupLayout(PanelUserInfo);
-        PanelUserInfo.setLayout(PanelUserInfoLayout);
-        PanelUserInfoLayout.setHorizontalGroup(
-            PanelUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelUserInfoLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(PanelUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNivel)
-                    .addComponent(lblUsername))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        PanelUserInfoLayout.setVerticalGroup(
-            PanelUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelUserInfoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblUsername)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblNivel)
-                .addContainerGap(10, Short.MAX_VALUE))
-        );
-
-        lbl_imgLogo.setIcon(new javax.swing.ImageIcon("/Users/alexhp/Downloads/logo(1).png")); // NOI18N
-
         btnEntrar.setText("Iniciar Sesion");
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,57 +279,86 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(PanelUserInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(PanelVentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(PanelAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnEntrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnLogOff)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(lbl_imgLogo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(lbl_imgLogo)
+                .addGap(18, 18, 18)
+                .addComponent(PanelUserInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(PanelVentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(PanelAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEntrar)
+                    .addComponent(btnLogOff))
+                .addGap(83, 83, 83))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnEntrar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnLogOff))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addComponent(lbl_imgLogo))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(PanelVentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(PanelAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(PanelUserInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(18, 18, 18)
-                .addComponent(mainDesktopPane)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(mainDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1262, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbl_imgLogo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(PanelUserInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(PanelVentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(PanelAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEntrar)
-                            .addComponent(btnLogOff))
-                        .addGap(19, 19, 19))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(mainDesktopPane)
-                        .addContainerGap())))
+                .addComponent(mainDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLogOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOffActionPerformed
+        // TODO add your handling code here:
+        //Cierrar las IJframes abiertos
+        mainDesktopPane.removeAll();
+        mainDesktopPane.repaint();
+
+        //Cambiamos el estado login del sistema
+        ActualizarEstadoLogin(false, 0);
+
+        // Regresamos los campos a predeterminados
+        lblUsername.setText("");
+        lblNivel.setText("");
+        btnEntrar.setEnabled(true);
+        btnLogOff.setEnabled(false);
+    }//GEN-LAST:event_btnLogOffActionPerformed
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         // TODO add your handling code here:
@@ -327,28 +368,13 @@ public class MainFrame extends javax.swing.JFrame {
         JIFlogin.setVisible(true);
     }//GEN-LAST:event_btnEntrarActionPerformed
 
-    private void btnLogOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOffActionPerformed
+    private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
         // TODO add your handling code here:
-        //Cierrar las IJframes abiertos
-        mainDesktopPane.removeAll();
-        mainDesktopPane.repaint();
-        
-        //Cambiamos el estado login del sistema
-        ActualizarEstadoLogin(false, 0);
-        
-        // Regresamos los campos a predeterminados
-        lblUsername.setText("");
-        lblNivel.setText("");
-        btnEntrar.setEnabled(true);
-        btnLogOff.setEnabled(false);
-    }//GEN-LAST:event_btnLogOffActionPerformed
-
-    private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
-        // TODO add your handling code here:
-        JIFrame_Inventario JIFinventario = new JIFrame_Inventario(mainDesktopPane, this.nivelUsuario);
-        mainDesktopPane.add(JIFinventario);
-        JIFinventario.setVisible(true);
-    }//GEN-LAST:event_btnInventarioActionPerformed
+        // Abrir FrmUsuarios
+        JIFrame_Usuarios JIFusuarios = new JIFrame_Usuarios(mainDesktopPane, this);
+        mainDesktopPane.add(JIFusuarios);
+        JIFusuarios.setVisible(true);
+    }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         // TODO add your handling code here:
@@ -364,13 +390,12 @@ public class MainFrame extends javax.swing.JFrame {
         JIFventas.setVisible(true);
     }//GEN-LAST:event_btnVentasActionPerformed
 
-    private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
+    private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
         // TODO add your handling code here:
-        // Abrir FrmUsuarios
-        JIFrame_Usuarios JIFusuarios = new JIFrame_Usuarios(mainDesktopPane, this);
-        mainDesktopPane.add(JIFusuarios);
-        JIFusuarios.setVisible(true);
-    }//GEN-LAST:event_btnUsuariosActionPerformed
+        JIFrame_Inventario JIFinventario = new JIFrame_Inventario(mainDesktopPane, this.nivelUsuario);
+        mainDesktopPane.add(JIFinventario);
+        JIFinventario.setVisible(true);
+    }//GEN-LAST:event_btnInventarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -418,12 +443,14 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnLogOff;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton btnVentas;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JLabel lblAdminClientes;
     private javax.swing.JLabel lblAdminInventario;
     private javax.swing.JLabel lblAdminUsuarios;
     private javax.swing.JLabel lblAdminVentas;
+    private javax.swing.JLabel lblBienvenido;
     private javax.swing.JLabel lblNivel;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JLabel lbl_imgLogo;

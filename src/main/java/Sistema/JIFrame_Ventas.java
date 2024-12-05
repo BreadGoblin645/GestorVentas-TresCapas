@@ -272,7 +272,20 @@ public class JIFrame_Ventas extends javax.swing.JInternalFrame {
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
         // TODO add your handling code here:
+        int filaSeleccionada = jTable_Ventas.getSelectedRow();
+        if (filaSeleccionada != -1) { 
+            int id = (int) jTable_Ventas.getValueAt(filaSeleccionada, 0);
+            int productoID = (int) jTable_Ventas.getValueAt(filaSeleccionada, 1);
+            int clienteID = (int) jTable_Ventas.getValueAt(filaSeleccionada, 2);
+            String fecha = (String) jTable_Ventas.getValueAt(filaSeleccionada, 3);
+            int cantidad = (int) jTable_Ventas.getValueAt(filaSeleccionada, 4);
+            double total = (double) jTable_Ventas.getValueAt(filaSeleccionada, 5);
 
+            // Crear y mostrar el formulario de gestión
+            JIFrame_Ventas_Gestor Fgestor = new JIFrame_Ventas_Gestor(this, nivelUsuario, id, productoID, clienteID, fecha, cantidad, total);
+            desktopPane.add(Fgestor); 
+            Fgestor.setVisible(true); 
+        }
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed

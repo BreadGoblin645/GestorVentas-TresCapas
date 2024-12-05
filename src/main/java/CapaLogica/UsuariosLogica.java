@@ -111,7 +111,7 @@ public class UsuariosLogica {
     
     // Obtener nombre y nivel por correo
     public UsuariosDAO obtenerDatosUsuario(String correo) {
-        String consultaSQL = "SELECT nombres, niveles FROM usuarios WHERE correos = '" + correo + "'";
+        String consultaSQL = "SELECT nombres, apellidos, niveles FROM usuarios WHERE correos = '" + correo + "'";
         UsuariosDAO usuario = null;
 
         try {
@@ -119,6 +119,7 @@ public class UsuariosLogica {
             if (resultado.next()) {
                 usuario = new UsuariosDAO();
                 usuario.setNombres(resultado.getString("nombres"));
+                usuario.setApellidos(resultado.getString("apellidos"));
                 usuario.setNivel(resultado.getInt("niveles"));
             }
         } catch (Exception e) {

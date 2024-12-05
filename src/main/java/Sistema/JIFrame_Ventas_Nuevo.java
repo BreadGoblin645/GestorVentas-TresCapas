@@ -410,8 +410,6 @@ public class JIFrame_Ventas_Nuevo extends javax.swing.JInternalFrame {
 
         
         String cantidadTexto = txtCantidad.getText().trim();
-        
-        
         String totalTexto = txtTotal.getText().trim();
 
         if (idInventarioTexto.isEmpty() || cantidadTexto.isEmpty() || fecha.isEmpty() || totalTexto.isEmpty()) {

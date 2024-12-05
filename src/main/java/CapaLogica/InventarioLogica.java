@@ -59,18 +59,6 @@ public class InventarioLogica {
             return false;
         }
     }
-    /*
-    // ELIMINAR DATOS DE LA TABLA INVENTARIOS
-    public boolean eliminarInventario(String modelo) {
-        String consultaSQL = "DELETE FROM inventario WHERE modelo = '" + modelo + "'";
-        try {
-            return conexion.ejecutaSentenciasAccion(consultaSQL);
-        } catch (Exception e) {
-            System.out.println("Error al eliminar inventario: " + e.getMessage());
-            return false;
-        }
-    }
-    */
     
     public boolean eliminarInventarioPorId(int idInventario) {
         String consultaSQL = "DELETE FROM inventario WHERE id = " + idInventario;
