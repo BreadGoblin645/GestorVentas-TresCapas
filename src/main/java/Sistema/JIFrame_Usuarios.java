@@ -14,10 +14,6 @@ import javax.swing.table.DefaultTableModel;
  */
 
 public class JIFrame_Usuarios extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form JIFrame_Usuarios
-     */
     
     private MainFrame mainFrame;
     private JDesktopPane desktopPane;
@@ -390,7 +386,8 @@ public class JIFrame_Usuarios extends javax.swing.JInternalFrame {
             return;
         }
 
-        int confirmacion = JOptionPane.showConfirmDialog(rootPane, "¿Estás seguro de que deseas eliminar este usuario?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        int confirmacion = JOptionPane.showConfirmDialog(rootPane, "¿Estás seguro de que deseas eliminar este usuario?",
+                "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
         if (confirmacion == JOptionPane.YES_OPTION) {
             boolean resultado = usuariosLogica.eliminarUsuario(correo);
             if (resultado) {

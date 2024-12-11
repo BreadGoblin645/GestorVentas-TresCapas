@@ -1,15 +1,7 @@
 
 package Sistema;
 
-/**
- *
- * @author alexhp
- */
 public class MainFrame extends javax.swing.JFrame {
-
-    /**
-     * Creates new form MainFrame2
-     */
     
     public MainFrame() {
         initComponents();
@@ -89,6 +81,7 @@ public class MainFrame extends javax.swing.JFrame {
         btnLogOff = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sistema de Ventas");
 
         mainDesktopPane.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         mainDesktopPane.setPreferredSize(new java.awt.Dimension(1200, 800));
@@ -104,7 +97,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        lbl_imgLogo.setIcon(new javax.swing.ImageIcon("/Users/alexhp/Downloads/logo(1).png")); // NOI18N
+        lbl_imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/logo.png"))); // NOI18N
 
         PanelUserInfo.setEnabled(false);
 
@@ -117,7 +110,7 @@ public class MainFrame extends javax.swing.JFrame {
         lblUsername.setFocusable(false);
 
         lblNivel.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        lblNivel.setText("UsernameNivel");
+        lblNivel.setText("UsernameAccesLevel");
         lblNivel.setFocusable(false);
 
         javax.swing.GroupLayout PanelUserInfoLayout = new javax.swing.GroupLayout(PanelUserInfo);
@@ -284,15 +277,12 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PanelUserInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PanelVentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PanelAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PanelUserInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(PanelVentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(PanelAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(btnEntrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnLogOff)

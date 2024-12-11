@@ -4,7 +4,6 @@ package Sistema;
 import CapaLogica.ClientesDAO;
 import CapaLogica.ClientesLogica;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JDesktopPane;
 import javax.swing.table.DefaultTableModel;
@@ -256,7 +255,6 @@ public class JIFrame_Clientes extends javax.swing.JInternalFrame {
         if (filaSeleccionada != -1) {
             btnAdmin.setEnabled(true);
         }
-
     }//GEN-LAST:event_jTable_ClientesMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -281,9 +279,10 @@ public class JIFrame_Clientes extends javax.swing.JInternalFrame {
             String telefono = jTable_Clientes.getValueAt(filaSeleccionada, 3).toString();
             String correo = jTable_Clientes.getValueAt(filaSeleccionada, 4).toString();
             // Crear y mostrar el formulario de gestión de clientes
-            JIFrame_Clientes_Gestor Fgestor = new JIFrame_Clientes_Gestor(this, nivelUsuario, id, nombre, apellido, telefono, correo);
-            desktopPane.add(Fgestor); 
-            Fgestor.setVisible(true);
+            JIFrame_Clientes_Gestor JIFgestorCliente = new JIFrame_Clientes_Gestor(this, nivelUsuario, 
+                    id, nombre, apellido, telefono, correo);
+            desktopPane.add(JIFgestorCliente); 
+            JIFgestorCliente.setVisible(true);
         }
     }//GEN-LAST:event_btnAdminActionPerformed
 
@@ -302,7 +301,4 @@ public class JIFrame_Clientes extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 
-    void actualizarTablaInventario() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

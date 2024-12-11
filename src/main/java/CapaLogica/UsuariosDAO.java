@@ -52,6 +52,5 @@ public class UsuariosDAO {
 
     public void setNivel(int nivel) {
         this.nivel = nivel;
-    }
-    
+    }  
 }

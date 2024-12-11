@@ -17,9 +17,11 @@ public class Conexion {
     public Conexion(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/Sistemas", "root", "");
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/Sistemas_Ventas", "root", "");
             ejecutaSentencias = conexion.createStatement();
             System.out.println("SE CONECTO A LA BASE DE DATOS...");
+        } catch (ClassNotFoundException e) {
+            System.err.println("Driver MySQL no encontrado: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("NO SE CONECTO A LA BASE DE DATOS: ERROR:" + e.getMessage());
         }

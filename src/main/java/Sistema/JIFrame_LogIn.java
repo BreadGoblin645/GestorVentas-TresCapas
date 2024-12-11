@@ -10,10 +10,6 @@ import javax.swing.JOptionPane;
  * @author alexhp
  */
 public class JIFrame_LogIn extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form frame_LogIn
-     */    
     
     private JDesktopPane desktopPane;
     private UsuariosLogica usuariosLogica;
@@ -111,7 +107,7 @@ public class JIFrame_LogIn extends javax.swing.JInternalFrame {
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
-        lblUserImag.setIcon(new javax.swing.ImageIcon("/Users/alexhp/Downloads/blue-user(1).png")); // NOI18N
+        lblUserImag.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/blue-user.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,7 +118,7 @@ public class JIFrame_LogIn extends javax.swing.JInternalFrame {
                 .addComponent(lblUserImag)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,7 +130,7 @@ public class JIFrame_LogIn extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(73, 73, 73)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -160,8 +156,7 @@ public class JIFrame_LogIn extends javax.swing.JInternalFrame {
                 
                 String nombre = usuario.getNombres();
                 String apellido = usuario.getApellidos();
-                nivel = usuario.getNivel();
-                
+                nivel = usuario.getNivel();          
 
                 String nivelTexto = switch (nivel) {
                     case 1 -> "Usuario";
@@ -170,16 +165,14 @@ public class JIFrame_LogIn extends javax.swing.JInternalFrame {
                     default -> "Desconocido";
                 };
 
-                // Actualizar los labels del MainFrame
+                // Actualiza los labels del MainFrame y del panel de informacion del usuario
                 mainFrame.actualizarLabelsUsuario(nombre, apellido, nivelTexto);
                 mainFrame.ActualizarEstadoLogin(true, nivel);
                 mainFrame.activarBotonCerrarSesision();
                 mainFrame.desacativarLogInBoton();
             }
             
-            
-            // Cerrar Frame_Login
-            this.dispose();
+            this.dispose(); // Cerramos la ventana de LogIn
         } else {
             JOptionPane.showMessageDialog(this, "Error: Correo o clave inválidos.");
             LimpiarCampos();

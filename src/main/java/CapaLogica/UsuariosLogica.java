@@ -21,7 +21,8 @@ public class UsuariosLogica {
     public boolean insertarUsuario(UsuariosDAO pUsuarioDAO){
         String consultaSQL = "";
         consultaSQL = "INSERT INTO Usuarios(correos, nombres, apellidos, claves, niveles) ";
-        consultaSQL += "VALUES('" + pUsuarioDAO.getCorreos() + "', '" + pUsuarioDAO.getNombres() + "', '" + pUsuarioDAO.getApellidos() + "', '" + pUsuarioDAO.getClaves() + "', '" + pUsuarioDAO.getNivel() + "')";
+        consultaSQL += "VALUES('" + pUsuarioDAO.getCorreos() + "', '" + pUsuarioDAO.getNombres() + "', '"
+                + pUsuarioDAO.getApellidos() + "', '" + pUsuarioDAO.getClaves() + "', '" + pUsuarioDAO.getNivel() + "')";
         
         try{
             return conexion.ejecutaSentenciasAccion(consultaSQL);
@@ -45,8 +46,7 @@ public class UsuariosLogica {
             ResultSet resultado = conexion.ejecutaSentenciasSelect(consultaSQL);
             
             while(resultado.next()){
-                UsuariosDAO objUsuariosDAO = new UsuariosDAO();
-                
+                UsuariosDAO objUsuariosDAO = new UsuariosDAO();  
                 objUsuariosDAO.setCorreos(resultado.getString("correos"));
                 objUsuariosDAO.setNombres(resultado.getString(2));
                 objUsuariosDAO.setApellidos(resultado.getString(3));
