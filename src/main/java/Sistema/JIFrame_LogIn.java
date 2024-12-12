@@ -46,7 +46,6 @@ public class JIFrame_LogIn extends javax.swing.JInternalFrame {
         lblCorreo = new javax.swing.JLabel();
         lblUserImag = new javax.swing.JLabel();
 
-        setClosable(true);
         setTitle("Iniciar Sesion");
         setToolTipText("");
 

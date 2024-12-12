@@ -94,7 +94,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         mainDesktopPaneLayout.setVerticalGroup(
             mainDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 888, Short.MAX_VALUE)
         );
 
         lbl_imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/logo.png"))); // NOI18N

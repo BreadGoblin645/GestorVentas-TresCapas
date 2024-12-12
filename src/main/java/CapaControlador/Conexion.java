@@ -17,7 +17,7 @@ public class Conexion {
     public Conexion(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/Sistemas_Ventas", "root", "");
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/sistemas", "root", "");
             ejecutaSentencias = conexion.createStatement();
             System.out.println("SE CONECTO A LA BASE DE DATOS...");
         } catch (ClassNotFoundException e) {
