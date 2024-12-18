@@ -12,7 +12,6 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <!-- Dependencias -->
     <dependencies>
         <dependency>
             <groupId>com.mysql</groupId>
@@ -32,7 +31,6 @@
         </resources>
 
         <plugins>
-            <!-- Maven Shade Plugin para empaquetar todas las dependencias -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -52,14 +50,12 @@
                                         <exclude>META-INF/*.SF</exclude>
                                         <exclude>META-INF/*.DSA</exclude>
                                         <exclude>META-INF/*.RSA</exclude>
-                                        <!-- Excluimos el MANIFEST de dependencias para evitar la advertencia -->
                                         <exclude>META-INF/MANIFEST.MF</exclude>
                                     </excludes>
                                 </filter>
                             </filters>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <!-- Ajustar la clase principal a la que corresponda en tu proyecto -->
                                     <mainClass>Sistema.MainFrame</mainClass>
                                 </transformer>
                             </transformers>
@@ -70,7 +66,6 @@
         </plugins>
     </build>
 
-    <!-- Propiedades del proyecto -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
