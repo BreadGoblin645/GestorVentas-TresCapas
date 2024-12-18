@@ -1,7 +1,8 @@
 PROYECTO FINAL - PROGRAMACION III - Universidad Tecnologica de El Salvador
 
-Este repositorio contiene una investigación completa sobre el desarrollo de aplicaciones 
+Este repositorio contiene un proyecto completa con el desarrollo de una aplicacion
 MDI (Interfaz de Múltiples Documentos) en Java Swing utilizando el componente JDesktopPane. 
+
 El objetivo principal es mostrar el uso práctico de este componente para crear aplicaciones con múltiples 
 ventanas internas dentro de una ventana principal, comúnmente usadas en sistemas de ventas, 
 administración de inventarios, control de usuarios, entre otros.
