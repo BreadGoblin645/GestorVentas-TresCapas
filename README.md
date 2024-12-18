@@ -11,10 +11,10 @@ administración de inventarios, control de usuarios, entre otros.
 -- Requisitos
 
 Para ejecutar este proyecto, necesitas contar con:
-	- Java Development Kit (JDK 21 o superior)
- 	- Apache NetBeans IDE 22
-	- MySQL Server para la base de datos
-	- Maven para la gestión de dependencias y la creación del JAR ejecutable
+- Java Development Kit (JDK 21 o superior)
+- Apache NetBeans IDE 22
+- MySQL Server para la base de datos
+- Maven para la gestión de dependencias y la creación del JAR ejecutable
 
 Nota: El archivo Conexion.java debe ser configurado para apuntar a la base de datos correcta. 
 Asegúrate de actualizar las credenciales de la base de datos antes de ejecutar la aplicación.
